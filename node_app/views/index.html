@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML5实现SPA</title>
+</head>
+<style>
+    .appBtn{
+        margin-bottom:20px;
+    }
+    .appBtn button{
+        width:65px;
+        height:40px;
+        line-height: 40px;
+        text-align: center;
+        border:1px solid;
+        border-color:#CCC;
+        background: transparent;
+        border-radius: 5px;
+        cursor:pointer;
+        margin-left:10px;
+    }
+    .appBtn .active{
+        color:#F9b041;
+        border-color:#F9b041;
+    }
+    .appContent{
+        color:#FFF;
+        width:60%;
+        height:400px;
+        background-color: #888;
+        border:1px solid #FFF;
+        padding:20px 40px;
+    }
+</style>
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script>
+    $(function(){
+        var button = $('.appBtn button');
+        // console.log(button)
+
+        button.click(function(){
+            // console.log($(this).text());
+            
+            let route = $(this).text(); //把按钮内容当做url路由导航
+            pageChange(route);
+
+            //history.pushState 添加浏览器历史
+            history.pushState('','',route)   //state回调函数传入对象 title新页面标题 url新页面路径,地址栏会显示新路径
+        })
+
+        //根据点击或者路由改变相应的页面内容
+        function pageChange(route){
+            console.log(route);
+            button.removeClass('active');
+
+            //filter() 方法将匹配元素集合缩减为匹配指定选择器的元素
+            button.filter(function(){
+                return $(this).text() == route;
+            }).addClass('active');
+            
+            //改变内容
+            $('.appContent').text(`我是${route}`);
+        }
+    })
+    
+</script>
+<body>
+    <div class="appWried">
+        <div class="appBtn">
+            <button>PAGE1</button>
+            <button>PAGE2</button>
+            <button>PAGE3</button>
+        </div>
+        <div class="appContent">
+            暂无内容
+        </div>
+    </div>
+
+    
+</body>
+</html>
